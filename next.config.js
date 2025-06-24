@@ -36,7 +36,9 @@ const nextConfig = {
   output: 'standalone',
   target: 'server',
   experimental: {
-    serverActions: true,
+    serverActions: {
+      allowedOrigins: ['*'],
+    },
   },
 }
 
