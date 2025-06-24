@@ -14,6 +14,14 @@ const nextConfig = {
       fs: false,
       net: false,
       tls: false,
+      querystring: false,
+      url: false,
+      events: false,
+      buffer: false,
+      timers: false,
+      zlib: false,
+      path: false,
+      assert: false,
     }
     return config
   },
