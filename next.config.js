@@ -9,6 +9,11 @@ const nextConfig = {
       ...config.resolve.fallback,
       crypto: false,
       stream: false,
+      http: false,
+      https: false,
+      fs: false,
+      net: false,
+      tls: false,
     }
     return config
   },
@@ -22,6 +27,9 @@ const nextConfig = {
   },
   output: 'standalone',
   target: 'server',
+  experimental: {
+    serverActions: true,
+  },
 }
 
 module.exports = nextConfig;
