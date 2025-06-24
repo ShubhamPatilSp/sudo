@@ -29,10 +29,10 @@ export async function POST(req: NextRequest) {
         break
 
       case "invoice.payment_succeeded":
-        const invoice = event.data.object as Stripe.Invoice & { subscription: string }
+        const invoice = event.data.object as Stripe.Invoice & { lines: { data: Array<{ subscription: string }> }}
 
         // Handle successful payment (monthly renewal)
-        console.log("Payment succeeded:", invoice.subscription)
+        console.log("Payment succeeded:", invoice.lines.data[0]?.subscription)
 
         // Here you would:
         // 1. Refill user's credits
