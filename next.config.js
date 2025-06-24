@@ -4,7 +4,6 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  experimental: {},
   async rewrites() {
     return [
       {
@@ -13,6 +12,8 @@ const nextConfig = {
       },
     ];
   },
+  output: 'standalone',
+  target: 'server',
 }
 
 module.exports = nextConfig;
