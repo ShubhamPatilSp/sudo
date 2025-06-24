@@ -29,7 +29,7 @@ export async function POST(req: NextRequest) {
         break
 
       case "invoice.payment_succeeded":
-        const invoice = event.data.object as Stripe.Invoice
+        const invoice = event.data.object as Stripe.Invoice & { subscription: string }
 
         // Handle successful payment (monthly renewal)
         console.log("Payment succeeded:", invoice.subscription)
