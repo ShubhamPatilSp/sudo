@@ -1,9 +1,13 @@
-import { type NextRequest, NextResponse } from "next/server"
+import { NextRequest, NextResponse } from "next/server"
 import { getServerSession } from "next-auth"
 import Stripe from "stripe"
 
+if (!process.env.STRIPE_SECRET_KEY) {
+  throw new Error('STRIPE_SECRET_KEY is not configured')
+}
+
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: "2024-06-20",
+  apiVersion: "2025-05-28.basil",
 })
 
 export async function POST(req: NextRequest) {
@@ -36,13 +40,17 @@ export async function POST(req: NextRequest) {
         },
       ],
       mode: "subscription",
-      success_url: `${process.env.NEXTAUTH_URL}/dashboard?success=true`,
-      cancel_url: `${process.env.NEXTAUTH_URL}/pricing?canceled=true`,
+      success_url: process.env.NEXT_PUBLIC_SUCCESS_URL || `${process.env.NEXTAUTH_URL}/dashboard?success=true`,
+      cancel_url: process.env.NEXT_PUBLIC_CANCEL_URL || `${process.env.NEXTAUTH_URL}/pricing?canceled=true`,
       metadata: {
         userId: session.user.id || "",
         planName,
       },
     })
+
+    if (!checkoutSession.url) {
+      throw new Error('Failed to create checkout session')
+    }
 
     return NextResponse.json({ url: checkoutSession.url })
   } catch (error) {

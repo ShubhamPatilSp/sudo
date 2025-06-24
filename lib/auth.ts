@@ -1,6 +1,7 @@
 import NextAuth from "next-auth"
 import GoogleProvider from "next-auth/providers/google"
 import { SessionStrategy } from "next-auth"
+import { JWT } from "next-auth/jwt"
 
 const authOptions = {
   providers: [
@@ -11,6 +12,12 @@ const authOptions = {
   ],
   session: {
     strategy: "jwt" as SessionStrategy,
+    async session({ session, token }: { session: any; token: JWT }) {
+      if (session.user) {
+        session.user.id = token.sub
+      }
+      return session
+    },
   },
   pages: {
     signIn: "/auth/signin",
