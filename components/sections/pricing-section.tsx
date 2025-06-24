@@ -45,9 +45,12 @@ const plans = [
   },
 ]
 
-export function PricingSection() {
+interface PricingSectionProps {
+  session: any
+}
+
+export function PricingSection({ session }: PricingSectionProps) {
   const [isAnnual, setIsAnnual] = useState(false)
-  const { data: session } = useSession()
 
   const handleSubscribe = async (planName: string, price: number) => {
     if (!session) {
