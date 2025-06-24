@@ -5,9 +5,7 @@ const nextConfig = {
     unoptimized: true,
   },
   output: 'export',
-  experimental: {
-    appDir: true,
-  },
+  experimental: {},
   async rewrites() {
     return [
       {
